@@ -24,7 +24,7 @@ public interface GuestbookService {
         return entity;
     }
 
-    default GuestbookDTO entityToDto(Guestbook entity) {
+    default GuestbookDTO entityToDTO(Guestbook entity) {
 
         GuestbookDTO dto = GuestbookDTO.builder()
                 .gno(entity.getGno())

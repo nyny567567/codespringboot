@@ -5,6 +5,33 @@
     <title>Title</title>
 </head>
 <body>
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+      const msg = [[${msg}]];
+      console.log(msg);
+
+      const modal = new bootstrap.Modal(document.querySelector(".modal"));
+      if (msg){
+        modal.show();
+      }
+    </script>
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
     <th:block th:fragment="content">
         <h1>GuestBook List Page</h1>
@@ -29,24 +56,27 @@
             </tbody>
         </table>
 
-        //추가 되는 태그들
+
         <ul class="pagination h-100 justify-content-center align-items-center">
 
             <li class="page-item " th:if="${result.prev}">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                <a class="page-link" th:href="@{/guestbook/list(page= ${result.start-1})}" tabindex="-1">Previous</a>
             </li>
 
             <li th:class=" 'page-item ' + ${result.page == page?'active':''}"
                 th:each="page: ${result.pageList}">
-                <a class="page-link" href="#">
+                <a class="page-link" th:href="@{/guestbook/list(page = ${page})}">
                     [[${page}]]
                 </a>
             </li>
 
             <li class="page-item" th:if="${result.next}">
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" th:href="@{/guestbook/list(page= ${result.end + 1})}">Next</a>
             </li>
-        </ul> //추가되는 태그 끝
+        </ul>
+
+
+
     </th:block>
 </th:block>
 
